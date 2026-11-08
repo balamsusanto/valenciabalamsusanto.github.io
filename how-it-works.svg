@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" font-family="Manrope, Segoe UI, system-ui, sans-serif">
+  <rect width="960" height="420" rx="16" fill="#0B1122"/>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#F7A43B"/>
+    </marker>
+  </defs>
+  <text x="40" y="52" fill="#EEF2FA" font-size="22" font-weight="700" font-family="Sora, Segoe UI, sans-serif">How the chatbot answers a question</text>
+
+  <!-- library -->
+  <rect x="40" y="88" width="880" height="64" rx="12" fill="none" stroke="rgba(160,180,225,.35)" stroke-dasharray="5 5"/>
+  <text x="60" y="116" fill="#F7A43B" font-size="14" font-family="JetBrains Mono, Menlo, monospace">PREPARED ONCE</text>
+  <text x="60" y="138" fill="#C9D1E3" font-size="15">CV, reference letter and 6 project reports  →  split into 76 short passages  →  each turned into numbers that capture its meaning</text>
+
+  <!-- steps -->
+  <g font-size="15" fill="#EEF2FA">
+    <rect x="40" y="196" width="190" height="112" rx="12" fill="#121A31" stroke="rgba(160,180,225,.25)"/>
+    <text x="58" y="226" fill="#F7A43B" font-size="13" font-family="JetBrains Mono, Menlo, monospace">1 · SEARCH</text>
+    <text x="58" y="252">Find passages that</text>
+    <text x="58" y="274">match by meaning</text>
+    <text x="58" y="296">and by keywords</text>
+
+    <rect x="270" y="196" width="190" height="112" rx="12" fill="#121A31" stroke="rgba(160,180,225,.25)"/>
+    <text x="288" y="226" fill="#F7A43B" font-size="13" font-family="JetBrains Mono, Menlo, monospace">2 · RERANK</text>
+    <text x="288" y="252">A second model</text>
+    <text x="288" y="274">re-reads the top 20</text>
+    <text x="288" y="296">and keeps the best 5</text>
+
+    <rect x="500" y="196" width="190" height="112" rx="12" fill="#121A31" stroke="rgba(160,180,225,.25)"/>
+    <text x="518" y="226" fill="#F7A43B" font-size="13" font-family="JetBrains Mono, Menlo, monospace">3 · CHECK</text>
+    <text x="518" y="252">Is anything really</text>
+    <text x="518" y="274">relevant? If not,</text>
+    <text x="518" y="296">flag "not sure"</text>
+
+    <rect x="730" y="196" width="190" height="112" rx="12" fill="#121A31" stroke="#F7A43B"/>
+    <text x="748" y="226" fill="#F7A43B" font-size="13" font-family="JetBrains Mono, Menlo, monospace">4 · ANSWER</text>
+    <text x="748" y="252">The LLM writes a</text>
+    <text x="748" y="274">reply using only</text>
+    <text x="748" y="296">those passages</text>
+  </g>
+  <g stroke="#F7A43B" stroke-width="2" marker-end="url(#a)">
+    <line x1="232" y1="252" x2="266" y2="252"/>
+    <line x1="462" y1="252" x2="496" y2="252"/>
+    <line x1="692" y1="252" x2="726" y2="252"/>
+  </g>
+  <text x="40" y="360" fill="#8C96AE" font-size="15">The reply shows which documents it used. Questions the documents don't cover get "I'm not sure",</text>
+  <text x="40" y="384" fill="#8C96AE" font-size="15">and contact details were removed before anything was stored.</text>
+</svg>

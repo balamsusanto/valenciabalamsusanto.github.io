@@ -1,0 +1,127 @@
+/* "Ask My AI" chat on its project page */
+.chat {
+  margin-top: 44px;
+  padding: 24px;
+  border: 1px solid var(--accent);
+  border-radius: 18px;
+  background: var(--surface);
+  box-shadow: 0 14px 40px -24px var(--glow);
+}
+.chat h2 {
+  margin-top: 0 !important;
+}
+.chat-log {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 460px;
+  overflow-y: auto;
+  margin: 18px 0 14px;
+  padding-right: 4px;
+}
+.msg {
+  max-width: 88%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+.msg p,
+.msg li {
+  margin: 0 0 6px;
+  color: var(--fg) !important;
+}
+.msg p:last-child {
+  margin-bottom: 0;
+}
+.msg ul {
+  margin: 4px 0 6px;
+  padding-left: 20px;
+}
+.msg.bot {
+  align-self: flex-start;
+  background: var(--bg);
+}
+.msg.me {
+  align-self: flex-end;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+.msg.me p {
+  color: var(--on-accent) !important;
+}
+.msg.wait p {
+  color: var(--muted) !important;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+.msg.err {
+  border-color: var(--accent-2);
+}
+.msg .src {
+  font-size: 0.72rem;
+  color: var(--muted) !important;
+  margin-top: 8px;
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+.chat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.chip {
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+  white-space: normal;
+  text-align: left;
+}
+.chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.chat-form {
+  display: flex;
+  gap: 10px;
+}
+.chat-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+}
+.chat-form input:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+.chat-form .btn:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+.chat-note {
+  font-size: 0.72rem;
+  margin: 12px 0 0;
+}
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+@media (max-width: 520px) {
+  .chat {
+    padding: 18px 14px;
+  }
+  .msg {
+    max-width: 96%;
+  }
+}

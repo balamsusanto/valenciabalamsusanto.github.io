@@ -1,0 +1,245 @@
+/* Netflix catalogue dashboard on its project page (series colours validated for CVD + contrast) */
+.dash {
+  --c-m: #3987e5;
+  --c-t: #d95926;
+  --c-n: #8a8f98;
+  position: relative;
+  margin: 32px 0 8px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+}
+:root[data-theme='light'] .dash {
+  --c-m: #2a78d6;
+  --c-t: #eb6834;
+}
+.dash h2 {
+  margin: 0 !important;
+}
+.dash-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px 20px;
+  flex-wrap: wrap;
+}
+.dash-ctl {
+  display: flex;
+  gap: 10px 14px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px;
+}
+.seg button {
+  font: inherit;
+  font-size: 0.8rem;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 5px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.seg button[aria-pressed='true'] {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.dash-ctl label {
+  font-size: 0.8rem;
+  color: var(--muted);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.dash-ctl select {
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 4px 6px;
+}
+.dash .stats {
+  margin-top: 18px;
+}
+.dash .stat {
+  background: var(--bg);
+}
+.dash .stat b {
+  font-size: 1.25rem;
+}
+.dash-legend {
+  display: flex;
+  gap: 16px;
+  margin: 18px 0 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.dash-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.dash-legend i {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+}
+.dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+.panel {
+  margin: 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--bg);
+  min-width: 0;
+}
+.panel.wide {
+  grid-column: 1/-1;
+}
+/* TV-only view: keep the series panel in its usual (right) column instead of sliding left */
+.dash-grid #pn-min[hidden] + #pn-sea {
+  grid-column: -2/-1;
+}
+.panel h3 {
+  font-size: 1rem;
+  margin: 0;
+}
+.panel .cap {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 4px 0 10px;
+}
+.plot svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.plot text {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  fill: var(--muted);
+}
+.plot .val {
+  fill: var(--fg);
+}
+.plot .grid {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.plot .m {
+  fill: var(--c-m);
+}
+.plot .t {
+  fill: var(--c-t);
+}
+.plot .n {
+  fill: var(--c-n);
+}
+.plot .ln-m {
+  stroke: var(--c-m);
+}
+.plot .ln-t {
+  stroke: var(--c-t);
+}
+.plot .ln {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+.plot .dot {
+  stroke: var(--bg);
+  stroke-width: 2;
+}
+.plot .hit {
+  fill: transparent;
+  cursor: crosshair;
+}
+.plot .hit:hover + .hl,
+.plot .hl {
+  pointer-events: none;
+}
+.panel details {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.panel summary {
+  cursor: pointer;
+  font-family: var(--f-mono);
+  font-size: 0.75rem;
+}
+.panel table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.panel th,
+.panel td {
+  text-align: right;
+  padding: 3px 6px;
+  border-bottom: 1px solid var(--line);
+}
+.panel th:first-child,
+.panel td:first-child {
+  text-align: left;
+}
+.panel .tbl {
+  max-height: 220px;
+  overflow: auto;
+}
+.dash-tip {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  background: var(--surface);
+  color: var(--fg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+}
+.dash-tip i {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  display: inline-block;
+  margin-right: 6px;
+}
+.dash-tip b {
+  font-variant-numeric: tabular-nums;
+}
+.dash-note {
+  font-size: 0.72rem;
+  color: var(--muted) !important;
+  margin: 14px 0 0;
+}
+@media (max-width: 520px) {
+  .dash {
+    padding: 16px 12px;
+  }
+  .panel {
+    padding: 12px;
+  }
+  .dash-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

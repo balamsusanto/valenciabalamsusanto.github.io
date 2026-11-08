@@ -1,0 +1,101 @@
+/* nav */
+header.nav {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 50;
+  background: var(--nav);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 14px;
+}
+.brand {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.links a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: var(--muted);
+  position: relative;
+}
+.links a:hover,
+.links a.active {
+  color: var(--fg);
+}
+.links a.active::after {
+  content: '';
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 2px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.icon-btn {
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--fg);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.menu-btn {
+  display: none;
+}
+@media (max-width: 820px) {
+  .menu-btn {
+    display: grid;
+  }
+  .links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    padding: 8px max(20px, env(safe-area-inset-left, 0px)) 14px;
+  }
+  .links.open {
+    display: flex;
+  }
+}
+
+section {
+  padding-block: 96px;
+  scroll-margin-top: 70px;
+}
+.eyebrow {
+  color: var(--accent);
+  margin-bottom: 10px;
+  display: block;
+}
+.sec-title {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  margin-bottom: 40px;
+}

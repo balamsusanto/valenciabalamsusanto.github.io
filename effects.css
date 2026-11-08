@@ -1,0 +1,87 @@
+/* slot greeting */
+.slot {
+  display: block;
+  height: 1.18em;
+  overflow: hidden;
+  line-height: 1.18;
+}
+.slot-track {
+  display: block;
+  will-change: transform;
+}
+.slot-track span {
+  display: block;
+  height: 1.18em;
+}
+.slot-track.spin {
+  transition: transform 0.75s cubic-bezier(0.3, 1.35, 0.5, 1);
+}
+
+/* cursor */
+.c-ring,
+.c-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 100;
+  border-radius: 50%;
+  transform: translate(-100px, -100px);
+}
+.c-ring {
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border: 1.5px solid var(--fg);
+  transition:
+    width 0.2s,
+    height 0.2s,
+    margin 0.2s,
+    border-color 0.2s,
+    background 0.2s;
+}
+.c-ring.big {
+  width: 70px;
+  height: 70px;
+  margin: -35px 0 0 -35px;
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.c-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--fg);
+}
+@media (pointer: coarse) {
+  .c-ring,
+  .c-dot {
+    display: none;
+  }
+}
+
+/* reveal */
+.reveal {
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+.reveal.pending {
+  opacity: 0;
+  transform: translateY(28px);
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal,
+  .card,
+  .act,
+  .more-boxes .ico {
+    transition: none;
+  }
+  .reveal.pending {
+    opacity: 1;
+    transform: none;
+  }
+}

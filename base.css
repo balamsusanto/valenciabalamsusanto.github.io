@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+}
+img {
+  max-width: 100%;
+}
+/* Layout: one scrolling page on a dotted grid; sticky nav (name left, sections right); project pages swap in by hash. Dark-first. */
+:root {
+  --bg: #05070f;
+  --surface: #0b1122;
+  --fg: #eef2fa;
+  --muted: #8c96ae;
+  --line: rgba(160, 180, 225, 0.2);
+  --dot: rgba(150, 172, 215, 0.16);
+  --accent: #f7a43b;
+  --accent-2: #ff6e5e;
+  --glow: rgba(230, 120, 40, 0.42);
+  --scrim: rgba(2, 4, 10, 0.72);
+  --nav: rgba(5, 7, 15, 0.72);
+  --on-accent: #05070f;
+  --f-display: 'Sora', 'Segoe UI', system-ui, sans-serif;
+  --f-body: 'Manrope', 'Segoe UI', system-ui, sans-serif;
+  --f-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+:root[data-theme='light'] {
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --fg: #0e1424;
+  --muted: #586179;
+  --line: rgba(20, 32, 64, 0.14);
+  --dot: rgba(20, 32, 64, 0.14);
+  --accent: #ff7a1a;
+  --accent-2: #ff9f2e;
+  --glow: rgba(255, 140, 50, 0.28);
+  --scrim: rgba(10, 14, 24, 0.45);
+  --nav: rgba(246, 247, 249, 0.8);
+  --on-accent: #ffffff;
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.65 var(--f-body);
+  background-image: radial-gradient(var(--dot) 1px, transparent 1.3px);
+  background-size: 22px 22px;
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+body::after {
+  content: '';
+  position: fixed;
+  left: -22vw;
+  top: 10vh;
+  width: 48vw;
+  height: 80vh;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(closest-side, var(--glow), transparent);
+  filter: blur(30px);
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 60;
+  background: var(--nav);
+}
+a {
+  color: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+h1,
+h2,
+h3 {
+  font-family: var(--f-display);
+  text-wrap: balance;
+  margin: 0;
+  line-height: 1.1;
+}
+.mono {
+  font-family: var(--f-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+.grad {
+  background: linear-gradient(95deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
