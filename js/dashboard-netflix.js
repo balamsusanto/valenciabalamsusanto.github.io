@@ -1,5 +1,3 @@
-/* Netflix catalogue dashboard on its project page. */
-
 import { chartKit, watchWidth } from './charts.js';
 import { esc } from './shared.js';
 import { NFX } from './data/netflix-dashboard.js';
