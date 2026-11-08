@@ -1,5 +1,3 @@
-/* Amazon electronics dashboard on its project page. */
-
 import { chartKit, watchWidth } from './charts.js';
 import { esc } from './shared.js';
 import { AMZ } from './data/amazon-dashboard.js';
