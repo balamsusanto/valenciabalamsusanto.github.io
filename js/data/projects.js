@@ -132,7 +132,7 @@ export const projects = [
     stats: [
       { n: '48 / 48', l: 'test questions passed, including 16 it had to refuse' },
       { n: '122', l: 'short passages from my CV, a reference letter and my project reports' },
-      { n: '~2 s', l: 'typical time to answer (median 1.8 s in testing)' },
+      { n: '6–18 s', l: 'time to answer on the live site once the server is awake' },
       { n: '0', l: 'phone numbers or e-mail addresses it can share: all removed before indexing' },
     ],
     problem:
@@ -142,7 +142,7 @@ export const projects = [
       'Split them into 122 short passages and built a RAG chatbot (it looks up my documents before answering, instead of relying on memory).',
       'Searched the passages both by meaning and by keyword, re-ranked the best matches with a second model, and let the LLM (DeepSeek) answer only from the top five.',
       'Told it to say it is unsure when even the best match is a poor fit, and to list the documents each answer came from.',
-      'Limited each visitor to 15 questions every 10 minutes, and logged every question and answer.',
+      'Limited each visitor to 15 questions every 10 minutes. Questions and answers were logged during testing, but the live version does not store them.',
       {
         h: 'Testing the questions it should refuse',
         p: 'I wrote 48 test questions, and I re-run them after every change to the documents or the instructions. 19 of them have no answer it is allowed to give: my GPA, my salary expectations, off-topic requests, trick prompts such as "ignore all previous instructions", and requests for my contact details. A chatbot that answers everything confidently would pass the easy questions and fail these.',
@@ -150,7 +150,7 @@ export const projects = [
     ],
     results: [
       'Passed 48 of 48 test questions: 25 it should answer, 16 it should refuse (including off-topic and trick questions), 3 asking for contact details and 4 follow-up questions.',
-      'Answers in about 2 seconds and lists the documents each answer came from.',
+      'Answers in 6 to 18 seconds on the live site once the server is awake, and lists the documents each answer came from.',
     ],
     learnedH: 'What I learnt and areas of improvement',
     learned: [

@@ -70,6 +70,7 @@ function route() {
         ${p.role || p.when ? `<p class="mono" style="margin-top:14px">${[p.role, p.when].filter(Boolean).join(' · ')}</p>` : ''}
         ${p.stats ? `<div class="stats">${p.stats.map((s) => `<div class="stat"><b>${s.n}</b><span>${s.l}</span></div>`).join('')}</div>` : ''}
         ${p.parts ? partsHTML(p) : p.dash === 'amazon' ? amzDashHTML : p.dash ? dashHTML : p.image ? `<img src="${p.image}" alt="${p.imageAlt || p.title}" style="width:100%;border-radius:16px;margin:32px 0;border:1px solid var(--line)">` : '<div class="hero-img">screenshot or diagram</div>'}
+        ${p.chat && chatAvailable ? chatHTML : ''}
         ${
           p.parts
             ? ''
@@ -81,8 +82,7 @@ function route() {
         ${(p.gallery || []).map((g) => `<figure class="fig"><img src="${g.src}" alt="${g.alt}" loading="lazy"><figcaption>${g.cap}</figcaption></figure>`).join('')}
         ${p.learned ? `<h2>${p.learnedH || 'What I learned'}</h2>${Array.isArray(p.learned) ? `<ul>${p.learned.map((l) => `<li>${l}</li>`).join('')}</ul>` : `<p>${p.learned}</p>`}` : ''}
         ${p.verdict ? `<h2>Final verdict</h2><p>${p.verdict}</p>` : ''}
-        ${p.links && p.links.length ? `<h2>Links</h2><p>${p.links.map((l) => `<a href="${l.url}" target="_blank" rel="noopener" style="color:var(--accent)">${l.label} ↗</a>`).join(' · ')}</p>` : ''}
-        ${p.chat && chatAvailable ? chatHTML : ''}`;
+        ${p.links && p.links.length ? `<h2>Links</h2><p>${p.links.map((l) => `<a href="${l.url}" target="_blank" rel="noopener" style="color:var(--accent)">${l.label} ↗</a>`).join(' · ')}</p>` : ''}`;
     if (p.chat && chatAvailable) mountChat();
     main.hidden = true;
     detail.hidden = false;

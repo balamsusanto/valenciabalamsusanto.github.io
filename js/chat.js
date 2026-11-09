@@ -84,7 +84,7 @@ export function mountChat() {
     btn.disabled = true;
     const wait = add('bot wait', "<p>Looking through Valencia's documents…</p>");
     /* the hosted server sleeps when unused, so the first question can take a while.
-       Normal answers take 6-15 seconds, so this only shows when it's slower than that */
+       Normal answers take 6-18 seconds, so this only shows when it's slower than that */
     const wakingUp = setTimeout(() => {
       wait.innerHTML = '<p>Waking up the chatbot. The first question can take up to a minute…</p>';
     }, 20000);
