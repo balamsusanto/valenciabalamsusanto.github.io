@@ -60,6 +60,8 @@ export function initCursor() {
       mx = e.clientX;
       my = e.clientY;
       dot.style.transform = `translate(${mx}px,${my}px)`;
+      /* the normal arrow only goes once the dot is actually following the mouse */
+      document.documentElement.classList.add('custom-cursor');
     });
     (function loop() {
       const R = (ring.classList.contains('big') ? 35 : 22) + 4;

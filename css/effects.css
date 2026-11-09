@@ -18,6 +18,10 @@
 }
 
 /* cursor */
+.custom-cursor,
+.custom-cursor * {
+  cursor: none !important; /* !important beats the pointer cursor on buttons and links */
+}
 .c-ring,
 .c-dot {
   position: fixed;
