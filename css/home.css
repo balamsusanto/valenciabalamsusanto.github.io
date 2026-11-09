@@ -644,7 +644,7 @@
 #contact p {
   color: var(--muted);
   margin: 0 auto 32px;
-  max-width: 48ch;
+  max-width: 80ch;
 }
 .circles {
   display: flex;
