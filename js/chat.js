@@ -1,9 +1,15 @@
-/* "Ask My AI" chat. It needs the Python server in RAG_LLM/server.py, which GitHub Pages can't run,
-   so the chat box only appears when the site is opened on this computer. */
+/* "Ask My AI" chat. It needs the Python server in RAG_LLM/server.py, which GitHub Pages can't run.
+   The live site talks to the hosted copy of that server at CHAT_SERVER. While CHAT_SERVER is empty,
+   the chat box only appears when the site is opened on this computer. */
 
 import { esc } from './shared.js';
 
-export const chatAvailable = ['localhost', '127.0.0.1'].includes(location.hostname);
+const CHAT_SERVER = 'https://ask-valencia-9858443497.asia-east1.run.app';
+
+const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
+const chatUrl = isLocal ? '/api/chat' : `${CHAT_SERVER}/api/chat`;
+
+export const chatAvailable = isLocal || CHAT_SERVER !== '';
 
 export const chatHTML = `<section class="chat" aria-labelledby="chat-h">
       <h2 id="chat-h">Try it yourself</h2>
@@ -77,8 +83,12 @@ export function mountChat() {
     input.value = '';
     btn.disabled = true;
     const wait = add('bot wait', "<p>Looking through Valencia's documents…</p>");
+    /* the hosted server sleeps when unused, so the first question can take a while */
+    const wakingUp = setTimeout(() => {
+      wait.innerHTML = '<p>Waking up the chatbot. The first question can take up to a minute…</p>';
+    }, 6000);
     try {
-      const r = await fetch('/api/chat', {
+      const r = await fetch(chatUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: q, history: chatHistory.slice(-6) }),
@@ -97,6 +107,7 @@ export function mountChat() {
       wait.classList.add('err');
       wait.innerHTML = `<p>${esc(e instanceof TypeError ? "The chatbot server is offline right now, so I can't answer. Please try again later." : e.message)}</p>`;
     } finally {
+      clearTimeout(wakingUp);
       btn.disabled = false;
       input.focus();
     }
