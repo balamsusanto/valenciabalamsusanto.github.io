@@ -1,12 +1,12 @@
 /* hero */
 .hero {
-  padding-block: 120px 72px;
+  padding-block: 140px 72px;
 }
 /* photo sits in the intro row, so its height always equals "I'm Valencia" through the last paragraph, plus the gaps above and below */
 .hero-grid {
   display: grid;
   grid-template-columns: 1.25fr 1fr;
-  column-gap: 100px;
+  column-gap: 150px;
   grid-template-areas: 'eyebrow .' 'hi .' 'intro photo' 'btns .';
 }
 .hero-grid > .eyebrow {
