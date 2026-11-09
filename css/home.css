@@ -1,6 +1,6 @@
 /* hero */
 .hero {
-  padding-block: 80px 72px;
+  padding-block: 96px 0px;
 }
 /* photo sits in the intro row, so its height always equals "I'm Valencia" through the last paragraph, plus the gaps above and below */
 .hero-grid {
