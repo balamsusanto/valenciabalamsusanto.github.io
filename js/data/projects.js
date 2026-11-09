@@ -155,8 +155,7 @@ export const projects = [
     learnedH: 'What I learnt and areas of improvement',
     learned: [
       'Most of the work was teaching it to say "I\'m not sure". Testing questions it should refuse mattered as much as testing the ones it should answer.',
-      'An automatic test can be wrong too: one correct refusal failed only because of its wording ("her materials don\'t list any weaknesses"), so I check failed answers by hand before changing anything.',
-      '<span class="todo">To improve the project, I would … (for example, hosting it online so visitors can use it; it currently runs only on my laptop)</span>',
+      'An automatic test can be wrong too: one correct refusal failed only because of its wording ("her materials don\'t list any weaknesses"), so I check failed answers by hand before changing anything.'
     ],
     verdict:
       'Yes, within limits. Answering only from my own documents, it passed every test question, including the ones it had to refuse, and never gave out contact details. It can only be as complete as the documents behind it, so anything they do not cover gets an honest "I\'m not sure".',
