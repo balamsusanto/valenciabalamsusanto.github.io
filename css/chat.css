@@ -1,6 +1,6 @@
 /* "Ask My AI" chat on its project page */
 .chat {
-  margin-top: 44px;
+  margin-top: 0; /* the diagram above already has space below it */
   padding: 24px;
   border: 1px solid var(--accent);
   border-radius: 18px;

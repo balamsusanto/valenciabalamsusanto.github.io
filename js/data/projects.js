@@ -133,7 +133,7 @@ export const projects = [
       { n: '48 / 48', l: 'test questions passed, including 16 it had to refuse' },
       { n: '122', l: 'short passages from my CV, a reference letter and my project reports' },
       { n: '6–18 s', l: 'time to answer on the live site once the server is awake' },
-      { n: '0', l: 'phone numbers or e-mail addresses it can share: all removed before indexing' },
+      { n: '0', l: 'phone numbers or <br>e-mail addresses it can share: all removed before indexing' },
     ],
     problem:
       'Chatbots are good at sounding confident, which is a problem when the subject is a real person. A recruiter asking about me needs answers that are true, and a clear "I don\'t know" when my documents don\'t say. This project tests whether a chatbot can answer only from my own documents, and admit when they do not cover a question.',

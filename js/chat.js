@@ -16,9 +16,9 @@ export const chatHTML = `<section class="chat" aria-labelledby="chat-h">
       <p>Ask anything about my education, work experience, skills or projects. It only knows what is in my documents, so it will tell you when it is not sure.</p>
       <div class="chat-log" id="chat-log" aria-live="polite"></div>
       <div class="chat-chips" id="chat-chips">${[
-        'What did Valencia do at MTR?',
+        'Tell me more about Valencia.',
         'Which programming languages does she know?',
-        'Did her LSTM beat the random walk?',
+        'Write me a summary of Valencia\'s experience and skills.',
         'What does her manager say about her?',
       ]
         .map((q) => `<button type="button" class="pill chip">${q}</button>`)
