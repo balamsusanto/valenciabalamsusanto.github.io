@@ -49,11 +49,13 @@ function partsHTML(p) {
       .join('')
   );
 }
+let backHref = '#projects';
 function route() {
   const h = location.hash.slice(1);
   detail.classList.toggle('wide', h === 'projects-all');
   const p = projects.find((x) => 'project-' + x.slug === h);
   if (h === 'projects-all') {
+    backHref = '#projects-all';
     db.innerHTML = `<a class="back mono" href="#projects">← Back to projects</a>
         <h1 class="sec-title">Things I've built - more</h1>
         <div class="proj-grid">${projects.map((x) => card(x)).join('')}</div>`;
@@ -62,7 +64,7 @@ function route() {
     scrollTo(0, 0);
     setActive('#projects');
   } else if (p) {
-    db.innerHTML = `<a class="back mono" href="#projects">← Back to projects</a>
+    db.innerHTML = `<a class="back mono" href="${backHref}">← Back to projects</a>
         <h1>${p.title}</h1><p class="sum">${p.sum}</p>
         <div class="tags">${p.tools.map((t) => `<span class="pill">${t}</span>`).join('')}</div>
         ${p.role || p.when ? `<p class="mono" style="margin-top:14px">${[p.role, p.when].filter(Boolean).join(' · ')}</p>` : ''}
@@ -91,6 +93,7 @@ function route() {
         : mountDash)(); /* after unhiding, so the charts can measure their width */
     setActive('#projects');
   } else {
+    backHref = '#projects';
     if (!main.hidden) {
       return;
     }
