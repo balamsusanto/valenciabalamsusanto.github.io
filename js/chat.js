@@ -1,6 +1,8 @@
 /* "Ask My AI" chat. It needs the Python server in RAG_LLM/server.py, which GitHub Pages can't run.
    The live site talks to the hosted copy of that server at CHAT_SERVER. While CHAT_SERVER is empty,
-   the chat box only appears when the site is opened on this computer. */
+   the chat box only appears when the site is opened on this computer.
+   The same chat appears on the home page and on the chatbot's project page; both share one
+   conversation and one 5-question limit per browser. */
 
 import { esc } from './shared.js';
 
@@ -11,25 +13,58 @@ const chatUrl = isLocal ? '/api/chat' : `${CHAT_SERVER}/api/chat`;
 
 export const chatAvailable = isLocal || CHAT_SERVER !== '';
 
-export const chatHTML = `<section class="chat" aria-labelledby="chat-h">
-      <h2 id="chat-h">Try it yourself</h2>
-      <p>Ask anything about my education, work experience, skills or projects. It only knows what is in my documents, so it will tell you when it is not sure.</p>
-      <div class="chat-log" id="chat-log" aria-live="polite"></div>
-      <div class="chat-chips" id="chat-chips">${[
-        'Tell me more about Valencia.',
-        'Which programming languages does she know?',
-        'Write me a summary of Valencia\'s experience and skills.',
-        'What does her manager say about her?',
-      ]
-        .map((q) => `<button type="button" class="pill chip">${q}</button>`)
-        .join('')}</div>
-      <form class="chat-form" id="chat-form">
-        <label for="chat-q" class="sr">Your question</label>
-        <input id="chat-q" maxlength="500" autocomplete="off" placeholder="Ask about Valencia…">
+/* each visitor gets 5 questions, remembered in this browser (the server itself only has a
+   rate limit, so clearing site data resets this count) */
+export const LIMIT = 5;
+const KEY = 'askValenciaAsked';
+let memCount = 0;
+function asked() {
+  try {
+    return Math.max(memCount, parseInt(localStorage.getItem(KEY), 10) || 0);
+  } catch {
+    return memCount;
+  }
+}
+function countOne() {
+  memCount = asked() + 1;
+  try {
+    localStorage.setItem(KEY, String(memCount));
+  } catch {
+    /* storage blocked: the limit still holds until the page reloads */
+  }
+}
+const left = () => Math.max(0, LIMIT - asked());
+const leftText = () => {
+  const n = left();
+  return n ? `${n} of ${LIMIT} questions left.` : 'No questions left.';
+};
+const LIMIT_REPLY = `<p>That's your ${LIMIT} questions used up. To find out more, please
+  <a href="mailto:valenciabalamm@gmail.com">email Valencia</a> or
+  <a href="https://www.linkedin.com/in/valenciabalamm/" target="_blank" rel="noopener">message her on LinkedIn</a>.
+  She'd be happy to hear from you!</p>`;
+
+const CHIPS = [
+  'Tell me more about Valencia.',
+  'Which programming languages does she know?',
+  "Write me a summary of Valencia's experience and skills.",
+  'What does her manager say about her?',
+];
+
+/* id keeps the label and heading links unique when both chats exist on the page */
+export function chatHTML({ id = 'chat', heading = 'Try it yourself', compact = false } = {}) {
+  return `<section class="chat${compact ? ' chat-compact' : ''}" aria-labelledby="${id}-h">
+      <h2 id="${id}-h">${heading}</h2>
+      <p class="chat-intro">Ask anything about my education, work experience, skills or projects. It only knows what is in my documents, so it will tell you when it is not sure.</p>
+      <div class="chat-log" aria-live="polite"></div>
+      <div class="chat-chips">${CHIPS.map((q) => `<button type="button" class="pill chip">${q}</button>`).join('')}</div>
+      <form class="chat-form">
+        <label for="${id}-q" class="sr">Your question</label>
+        <input id="${id}-q" maxlength="500" autocomplete="off" placeholder="Ask about Valencia…">
         <button class="btn" type="submit">Ask</button>
       </form>
-      <p class="chat-note mono">AI answers can still be wrong. Please confirm anything important with me directly.</p>
+      <p class="chat-note mono"><span class="chat-left"></span> AI answers can still be wrong. Please confirm anything important with me directly.</p>
     </section>`;
+}
 function md(s) {
   /* tiny, safe markdown: escape first, then bold + bullet lists + paragraphs */
   const lines = esc(s)
@@ -56,11 +91,17 @@ function md(s) {
   return out + (inList ? '</ul>' : '');
 }
 const chatHistory = [];
-export function mountChat() {
-  const log = document.getElementById('chat-log'),
-    form = document.getElementById('chat-form'),
-    input = document.getElementById('chat-q'),
-    btn = form.querySelector('button');
+/* root: the .chat section. onState(state, text) reports 'processing', 'talking' or 'error' */
+export function mountChat(root, { onState = () => {} } = {}) {
+  const log = root.querySelector('.chat-log'),
+    form = root.querySelector('.chat-form'),
+    input = form.querySelector('input'),
+    btn = form.querySelector('button'),
+    leftEl = root.querySelector('.chat-left');
+  const showLeft = () => {
+    leftEl.textContent = leftText();
+  };
+  showLeft();
   const add = (cls, html) => {
     const d = document.createElement('div');
     d.className = 'msg ' + cls;
@@ -69,19 +110,38 @@ export function mountChat() {
     log.scrollTop = log.scrollHeight;
     return d;
   };
-  add('bot', "<p>Hi! I can answer questions about Valencia's background and projects.</p>");
-  chatHistory.forEach((h) =>
-    add(
-      h.role === 'user' ? 'me' : 'bot',
-      h.role === 'user' ? `<p>${esc(h.content)}</p>` : md(h.content),
-    ),
-  );
+  let shown = -1;
+  function replay() {
+    if (shown === chatHistory.length) return;
+    shown = chatHistory.length;
+    log.innerHTML = '';
+    add('bot', "<p>Hi! I can answer questions about Valencia's background and projects.</p>");
+    chatHistory.forEach((h) =>
+      add(
+        h.role === 'user' ? 'me' : 'bot',
+        h.role === 'user' ? `<p>${esc(h.content)}</p>` : md(h.content),
+      ),
+    );
+  }
+  replay();
+  /* the home chat stays on the page while a project page is open, so catch up on its return */
+  addEventListener('hashchange', () => {
+    if (!root.isConnected || btn.disabled) return;
+    replay();
+    showLeft();
+  });
   async function ask(q) {
     q = q.trim();
     if (!q || btn.disabled) return;
     add('me', `<p>${esc(q)}</p>`);
     input.value = '';
+    if (!left()) {
+      add('bot', LIMIT_REPLY);
+      onState('talking', LIMIT_REPLY);
+      return;
+    }
     btn.disabled = true;
+    onState('processing');
     const wait = add('bot wait', "<p>Looking through Valencia's documents…</p>");
     /* the hosted server sleeps when unused, so the first question can take a while.
        Normal answers take 6-18 seconds, so this only shows when it's slower than that */
@@ -103,21 +163,26 @@ export function mountChat() {
           ? `<p class="src mono">Sources: ${d.sources.map((s) => esc(s.label)).join(' · ')}</p>`
           : '');
       chatHistory.push({ role: 'user', content: q }, { role: 'assistant', content: d.answer });
+      shown = chatHistory.length;
+      countOne(); /* only answered questions use up the limit */
+      showLeft();
+      onState('talking', d.answer);
     } catch (e) {
       wait.classList.remove('wait');
       wait.classList.add('err');
       wait.innerHTML = `<p>${esc(e instanceof TypeError ? "The chatbot server is offline right now, so I can't answer. Please try again later." : e.message)}</p>`;
+      onState('error');
     } finally {
       clearTimeout(wakingUp);
       btn.disabled = false;
-      input.focus();
+      input.focus({ preventScroll: true });
     }
   }
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     ask(input.value);
   });
-  document.getElementById('chat-chips').addEventListener('click', (e) => {
+  root.querySelector('.chat-chips').addEventListener('click', (e) => {
     const b = e.target.closest('.chip');
     if (b) ask(b.textContent);
   });

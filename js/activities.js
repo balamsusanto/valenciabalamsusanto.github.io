@@ -8,7 +8,7 @@ export function initActivities() {
   ag.innerHTML = acts
     .map(
       (a, i) =>
-        `<button class="act" type="button" data-i="${i}"><img class="img" src="${a.photos[0].src}" alt="${a.photos[0].alt}" loading="lazy"${a.pos ? ` style="object-position:${a.pos}"` : ''}><h3>${a.title}</h3><span class="org">${a.org}</span><span class="when mono">${a.when}</span></button>`,
+        `<button class="act" type="button" data-i="${i}"><img class="img" src="${a.photos[0].src}" alt="${a.photos[0].alt}" loading="lazy"${a.pos ? ` style="object-position:${a.pos}"` : ''}><h3>${a.title}</h3><span class="org">${a.org}</span><span class="when mono">${a.when}</span><span class="impact">${a.impact}</span></button>`,
     )
     .join('');
 

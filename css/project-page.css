@@ -146,3 +146,47 @@
   padding: 10px 14px;
   color: var(--accent) !important;
 }
+
+/* skill pills sit on the right, led by an orange pill for the role the project suits */
+.tags {
+  justify-content: flex-end;
+}
+.pill.fit {
+  margin-right: auto; /* role on the left, skills on the right */
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+  font-weight: 500;
+}
+/* slightly tighter than elsewhere, so six skills and the longest role still fit on one line */
+#detail .tags {
+  gap: 5px;
+}
+#detail .tags .pill {
+  padding: 3px 8px;
+  font-size: 0.72rem;
+}
+
+/* row under the pills: project type and data source left, summary download right */
+.meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap; /* on phones the link drops under the source */
+  justify-content: space-between;
+  gap: 8px 16px;
+  margin-top: 14px;
+}
+.meta-row .dl-link {
+  text-decoration: none;
+}
+.meta-row .dl-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+#detail .meta-lines {
+  margin: 0;
+  line-height: 1.35;
+}
+.meta-row .dl-link {
+  margin-left: auto; /* stays right even when there is no source text */
+}

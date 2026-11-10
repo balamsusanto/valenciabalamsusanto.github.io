@@ -10,7 +10,7 @@
   <!-- library -->
   <rect x="40" y="88" width="880" height="64" rx="12" fill="none" stroke="rgba(160,180,225,.35)" stroke-dasharray="5 5"/>
   <text x="60" y="116" fill="#F7A43B" font-size="14" font-family="JetBrains Mono, Menlo, monospace">PREPARED ONCE</text>
-  <text x="60" y="138" fill="#C9D1E3" font-size="15">CV, reference letter and 10 project documents  →  122 short passages  →  each turned into numbers that capture its meaning</text>
+  <text x="60" y="138" fill="#C9D1E3" font-size="15">CV, reference letter, website and 10 project reports  →  175 short passages  →  each stored as numbers capturing its meaning</text>
 
   <!-- steps -->
   <g font-size="15" fill="#EEF2FA">

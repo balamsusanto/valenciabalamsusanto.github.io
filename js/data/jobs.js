@@ -8,9 +8,9 @@ export const jobDetails = {
   ],
   mtr: [
     'Main focus included <strong>end-to-end development and project management of internal RAG chatbots</strong>, system prompt engineering, and enterprise optimisation efforts.',
-    'Coordinated and deployed <strong>2 internal RAG chatbots</strong>, liaising between end-user business units, development, and management team to ensure project satisfaction and adoption. Final product <strong>increased workplace efficiency and enterprise AI adoption by over 20%</strong>.',
-    'Pioneered a GenAI application: <strong>LLM as Judge</strong> in Python, utilising API calls and prompt engineering to streamline chatbot QA procedures. <strong>Reduced employee testing efforts and duration by over 30%</strong>.',
-    'Automated standardisation processes via Python, <strong>cutting turnaround time and errors by over 50%</strong>.',
+    'Coordinated and deployed <strong>2 internal RAG chatbots</strong> used by <strong>~100 internal users</strong>, liaising between end-user business units, development, and management team to ensure project satisfaction and adoption. Final product <strong>increased workplace efficiency and enterprise AI adoption by over 20%</strong>.',
+    'Pioneered a GenAI application: <strong>LLM as Judge</strong> in Python, utilising API calls and prompt engineering to streamline chatbot QA procedures. <strong>Cut turnaround time and errors by over 50%, and manual testing effort by over 30%</strong>.',
+    'Automated standardisation processes via Python.',
     'Delivered product demonstrations to diverse stakeholders including tech teams, business managers, and <strong>the CIO</strong>.',
   ],
   bee: [

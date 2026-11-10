@@ -3,6 +3,8 @@
 export const projects = [
   {
     slug: 'loan-approval',
+    fit: 'Financial Analyst',
+    summaryPdf: 'files/Loan_Risk_Executive_Summary.pdf',
     ico: 'CR',
     title: 'Predicting Loan Default and Approval',
     tag: 'Machine learning',
@@ -73,6 +75,8 @@ export const projects = [
   },
   {
     slug: 'electronics-sales',
+    fit: 'Business Analyst &amp; Consulting',
+    summaryPdf: 'files/Amazon_Seller_Executive_Summary.pdf',
     ico: 'EL',
     title: 'How Can an Electronics Seller Boost Sales?',
     tag: 'Data analysis',
@@ -119,11 +123,12 @@ export const projects = [
   },
   {
     slug: 'ask-valencia',
+    fit: 'AI Engineer',
     ico: 'AI',
     title: 'Ask My AI: A Chatbot About Me',
     tag: 'LLMs',
     blurb:
-      'A chatbot that answers questions about me from my CV, a reference letter and project reports, and says so when it does not know.',
+      'A chatbot that answers questions about me from my CV, a reference letter, this website and project reports, and says so when it does not know.',
     sum: "Can a chatbot answer a recruiter's questions about me without ever making something up?",
     role: 'Personal project',
     when: 'Nov 2026',
@@ -131,15 +136,15 @@ export const projects = [
     chat: true,
     stats: [
       { n: '48 / 48', l: 'test questions passed, including 16 it had to refuse' },
-      { n: '122', l: 'short passages from my CV, a reference letter and my project reports' },
+      { n: '175', l: 'short passages from my CV, a reference letter, this website and my project reports' },
       { n: '6–18 s', l: 'time to answer on the live site once the server is awake' },
       { n: '0', l: 'phone numbers or <br>e-mail addresses it can share: all removed before indexing' },
     ],
     problem:
       'Chatbots are good at sounding confident, which is a problem when the subject is a real person. A recruiter asking about me needs answers that are true, and a clear "I don\'t know" when my documents don\'t say. This project tests whether a chatbot can answer only from my own documents, and admit when they do not cover a question.',
     approach: [
-      'Collected my CV, a recommendation letter from my MTR internship manager and the reports of my loan, gold, Amazon and Netflix projects, and removed every phone number and e-mail address before indexing.',
-      'Split them into 122 short passages and built a RAG chatbot (it looks up my documents before answering, instead of relying on memory).',
+      'Collected my CV, a recommendation letter from my MTR internship manager, the text of this website and the reports of my loan, gold, Amazon and Netflix projects, and removed every phone number and e-mail address before indexing.',
+      'Split them into 175 short passages and built a RAG chatbot (it looks up my documents before answering, instead of relying on memory).',
       'Searched the passages both by meaning and by keyword, re-ranked the best matches with a second model, and let the LLM (DeepSeek) answer only from the top five.',
       'Told it to say it is unsure when even the best match is a poor fit, and to list the documents each answer came from.',
       'Limited each visitor to 15 questions every 10 minutes. Questions and answers were logged during testing, but the live version does not store them.',
@@ -165,6 +170,7 @@ export const projects = [
   },
   {
     slug: 'netflix-catalogue',
+    fit: 'Data Analyst',
     ico: 'NF',
     title: 'Should I Keep Paying for Netflix?',
     tag: 'Data analysis',
@@ -205,6 +211,7 @@ export const projects = [
   },
   {
     slug: 'automation-others',
+    fit: 'AI Engineer',
     ico: 'Py',
     title: 'Automation &amp; others',
     tag: 'Automation',
@@ -216,7 +223,21 @@ export const projects = [
       'These are small tools I built to avoid repetitive work. The YouTube, transcript and rename scripts prepared the Indonesian scam audio data for my final-year project.',
     parts: [
       {
-        h: '1. Automating YouTube downloads',
+        h: '1. Using LLM for video generation',
+        p: [
+          'Used an LLM to create a title scene of up to 5 seconds for a direction video, which shows people the way to a location. The prompt below has the LLM build the animation in JavaScript on a canvas, then render it to MP4 with Playwright (a browser automation tool) and FFmpeg.',
+          'I ask for a few example styles and a storyboard before the full render, so I can choose a look and check the plan first.',
+        ],
+        prompt:
+          'Create a intro/ title scene (maximum of 5 seconds) for direction video. Generate the video in phone portrait mode, build it in Javascript on a canvas and render it to mp4 with playwright and FFmpeg. Before you render the whole video, first generate a few examples/ styles for me to choose from and generate a storyboard on how you plan the intro/ title scene to be. This 5 second clip is mainly just for title (to show people what the video is).',
+        fig: {
+          src: 'images/automation/storyboard.jpg',
+          alt: 'Storyboard frames in a paper collage style: cut-out letters spelling Direction To appear one by one above an instant photo of a wooden door, with some details blurred',
+          cap: 'Result: storyboard frames for the title scene, with some details blurred.',
+        },
+      },
+      {
+        h: '2. Automating YouTube downloads',
         p: [
           'Turned a spreadsheet of YouTube links into a numbered folder of MP3 files, with no manual downloading.',
         ],
@@ -257,20 +278,6 @@ while ws.cell(row=r, column=4).value is not None:
           src: 'images/automation/audio-files.jpg',
           alt: 'Finder window of a folder named audio holding numbered MP3 files, from audio_1.mp3 to audio_75.mp3',
           cap: 'Result: audio files named by their spreadsheet number.',
-        },
-      },
-      {
-        h: '2. Using LLM for video generation',
-        p: [
-          'Used an LLM to create a title scene of up to 5 seconds for a direction video, which shows people the way to a location. The prompt below has the LLM build the animation in JavaScript on a canvas, then render it to MP4 with Playwright (a browser automation tool) and FFmpeg.',
-          'I ask for a few example styles and a storyboard before the full render, so I can choose a look and check the plan first.',
-        ],
-        prompt:
-          'Create a intro/ title scene (maximum of 5 seconds) for direction video. Generate the video in phone portrait mode, build it in Javascript on a canvas and render it to mp4 with playwright and FFmpeg. Before you render the whole video, first generate a few examples/ styles for me to choose from and generate a storyboard on how you plan the intro/ title scene to be. This 5 second clip is mainly just for title (to show people what the video is).',
-        fig: {
-          src: 'images/automation/storyboard.jpg',
-          alt: 'Storyboard frames in a paper collage style: cut-out letters spelling Direction To appear one by one above an instant photo of a wooden door, with some details blurred',
-          cap: 'Result: storyboard frames for the title scene, with some details blurred.',
         },
       },
       {
@@ -336,13 +343,14 @@ while ws.cell(row=r, column=4).value is not None:
         fig: {
           src: 'images/automation/transcripts.jpg',
           alt: 'Finder window of a folder named text clean holding numbered transcript files, from audioTranscript_1.txt to audioTranscript_72.txt',
-          cap: 'Result: renamed transcripts, numbered without gaps. The audio folder in section 1 skips 8, 34 and 66.',
+          cap: 'Result: renamed transcripts, numbered without gaps. The audio folder in section 2 skips 8, 34 and 66.',
         },
       },
     ],
   },
   {
     slug: 'gold-risk-ranges',
+    fit: 'Financial Analyst',
     ico: 'Au',
     title: 'Forecasting Gold Volatility and Risk Ranges',
     tag: 'Market risk',

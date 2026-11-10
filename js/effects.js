@@ -28,16 +28,27 @@ export function initReveal() {
   }
 }
 
+/* hero greeting slot machine. While the opening screen is showing it waits, and it starts
+   from "Hello!" once the visitor is on the home page */
 export function initGreeting() {
   const slot = document.getElementById('slot');
-  if (!reduce) {
-    let i = 0;
-    const n = 3;
-    setInterval(() => {
+  if (reduce) return;
+  let i = 0,
+    timer = null;
+  function stop() {
+    clearInterval(timer);
+    timer = null;
+    i = 0;
+    slot.classList.remove('spin');
+    slot.style.transform = 'translateY(0)';
+  }
+  function start() {
+    stop();
+    timer = setInterval(() => {
       i++;
       slot.classList.add('spin');
       slot.style.transform = `translateY(${-i * 1.18}em)`;
-      if (i === n) {
+      if (i === 3) {
         setTimeout(() => {
           slot.classList.remove('spin');
           slot.style.transform = 'translateY(0)';
@@ -46,6 +57,9 @@ export function initGreeting() {
       }
     }, 1500);
   }
+  addEventListener('opener:open', stop);
+  addEventListener('opener:done', start);
+  if (!document.documentElement.classList.contains('opener-on')) start();
 }
 
 export function initCursor() {
@@ -81,7 +95,7 @@ export function initCursor() {
       requestAnimationFrame(loop);
     })();
     document.addEventListener('mouseover', (e) =>
-      ring.classList.toggle('big', !!e.target.closest('a,button,.card,.act')),
+      ring.classList.toggle('big', !!e.target.closest('a,button,.card,.act,.mascot')),
     );
   }
 }

@@ -6,14 +6,14 @@
     <title>Valencia Balam Susanto</title>
     <meta
       name="description"
-      content="Portfolio of Valencia Balam Susanto, a final-year student at The Hong Kong Polytechnic University working on AI and data."
+      content="Valencia Balam Susanto turns messy data into decisions: credit risk, retail analytics and reliable LLMs. Final-year student at PolyU, Hong Kong."
     />
     <link rel="canonical" href="https://valenciabalamsusanto.github.io/" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Valencia Balam Susanto" />
     <meta
       property="og:description"
-      content="Portfolio of Valencia Balam Susanto, a final-year student at The Hong Kong Polytechnic University working on AI and data."
+      content="Valencia Balam Susanto turns messy data into decisions: credit risk, retail analytics and reliable LLMs. Final-year student at PolyU, Hong Kong."
     />
     <meta property="og:url" content="https://valenciabalamsusanto.github.io/" />
     <link rel="icon" href="images/favicon.svg" type="image/svg+xml" />
@@ -30,8 +30,33 @@
     <link rel="stylesheet" href="css/chat.css" />
     <link rel="stylesheet" href="css/dashboard.css" />
     <link rel="stylesheet" href="css/effects.css" />
+    <link rel="stylesheet" href="css/opener.css" />
+    <script>
+      /* decide before anything is drawn whether to play the opening screen (see js/opener.js) */
+      try {
+        if (
+          !sessionStorage.getItem('introSeen') &&
+          (!location.hash || location.hash === '#home') &&
+          !matchMedia('(prefers-reduced-motion: reduce)').matches
+        )
+          document.documentElement.classList.add('opener-on');
+      } catch (e) {}
+    </script>
   </head>
   <body>
+    <div class="opener" id="opener">
+      <div class="opener-words" aria-hidden="true">
+        <span class="opener-word grad">Hello!</span>
+        <span class="opener-word grad">Halo!</span>
+        <span class="opener-word grad">您好!</span>
+      </div>
+      <button class="opener-skip" type="button">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6" /></svg>
+        Scroll or swipe up to skip
+      </button>
+    </div>
+    <div class="replay-prompt" id="replay-prompt" role="status" aria-live="polite" hidden></div>
     <div class="c-ring" aria-hidden="true"></div>
     <div class="c-dot" aria-hidden="true"></div>
 
@@ -40,9 +65,8 @@
         <a class="brand" href="#home">Valencia Balam Susanto</a>
         <div style="display:flex;align-items:center;gap:10px">
           <nav class="links" id="links" aria-label="Sections">
-            <a href="#home">Home</a><a href="#about">About</a><a href="#experience">Experience</a>
-            <a href="#projects">Projects</a><a href="#extracurriculars">Extracurriculars</a
-            ><a href="#contact">Contact</a>
+            <a href="#home">Home</a><a href="#chatbot">Chatbot</a><a href="#experience">Experience</a
+            ><a href="#projects">Projects</a><a href="#about">More</a><a href="#contact">Contact</a>
           </nav>
           <button
             class="icon-btn"
@@ -71,24 +95,21 @@
         <div class="wrap">
           <div class="hero-grid reveal">
             <span class="mono eyebrow">AI &amp; Data · Hong Kong</span>
-            <h1 aria-label="Hello! Halo! 您好！">
+            <h1 aria-label="Hello! Halo! 您好!">
               <span class="slot" aria-hidden="true"
                 ><span class="slot-track" id="slot"
-                  ><span>Hello!</span><span>Halo!</span><span>您好！</span><span>Hello!</span></span
+                  ><span>Hello!</span><span>Halo!</span><span>您好!</span><span>Hello!</span></span
                 ></span
               >
             </h1>
             <div class="intro">
               <h2 class="grad">I'm Valencia</h2>
-              <p class="lead">
-                Final-year student at PolyU, expected to graduate with First-class Honours in 2027.
+              <p class="headline">
+                I turn data into insights that drive decisions, <br>and I'm passionate about helping enterprises build and adopt GenAI tools.
               </p>
               <p class="lead">
-                I'm passionate about AI, data, solving business needs, and in my free time, Sudoku!
-              </p>
-              <p class="lead">
-                In my previous internships, I helped enterprises build GenAI tools and turn messy
-                data into business decisions and insights.
+                Final-year student at PolyU, graduating in 2027 with <br><strong>First-class Honours.</strong>
+                Previously at MTR and BeeInventor.
               </p>
             </div>
             <div class="photo">
@@ -99,6 +120,10 @@
                 height="800"
               />
             </div>
+            <dl class="hero-looking">
+              <dt class="mono"><strong>Looking for</strong></dt>
+              <dd>Internship &amp; Graduate roles in <strong>AI, data and technical consulting</strong></dd>
+            </dl>
             <div class="btns">
               <a
                 class="btn"
@@ -132,65 +157,17 @@
                   /></svg
                 >Email me</a
               >
+              <a class="btn" href="files/ValenciaBalamSUSANTO_Resume.pdf" download>Download CV</a>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="about">
+      <section id="chatbot">
         <div class="wrap">
-          <span class="mono eyebrow reveal">01 · About</span>
-          <h2 class="sec-title reveal">About me</h2>
-          <div class="about-grid">
-            <div class="reveal">
-              <p>
-                I'm a final-year engineering student at
-                <strong>The Hong Kong Polytechnic University</strong> who ended up falling for
-                <strong>AI and data</strong>. I do my best work by combining the two to
-                <strong>identify and solve real business needs</strong>.
-              </p>
-              <p>
-                At <strong>MTR</strong> I built
-                <strong>GenAI chatbots and the testing tools</strong> around them. Before that I
-                analysed <strong>IoT sensor data</strong> at <strong>BeeInventor</strong>, and I've
-                been a <strong>research assistant at PolyU</strong> since 2023.
-              </p>
-              <p>
-                Outside of work, I like volunteering and building cool projects. <br />Scroll through or
-                download my CV to get to know me more!
-              </p>
-              <div class="btns">
-                <a class="btn" href="files/ValenciaBalamSUSANTO_Resume.pdf" download>Download CV</a>
-              </div>
-            </div>
-            <dl class="facts reveal">
-              <div>
-                <dt class="mono">Currently</dt>
-                <dd>
-                  Final-year BEng Electronic Systems &amp; IoT at PolyU, expected to graduate with
-                  <strong>First-class Honours</strong>.
-                </dd>
-                <dd>
-                  My final-year project explores using
-                  <strong>LLMs as a scam detection method</strong>.
-                </dd>
-              </div>
-              <div>
-                <dt class="mono">Recognition</dt>
-                <dd><strong>Dean's List</strong> and <strong>scholarship recipient</strong>.</dd>
-              </div>
-              <div>
-                <dt class="mono">Languages</dt>
-                <dd>English, Indonesian, Chinese</dd>
-              </div>
-              <div>
-                <dt class="mono">Looking for</dt>
-                <dd>
-                  Internship & Graduate roles in <strong>AI, data and technical consulting</strong>
-                </dd>
-              </div>
-            </dl>
-          </div>
+          <span class="mono eyebrow reveal">01 · Chatbot</span>
+          <h2 class="sec-title reveal">Get to know me; Ask my AI!</h2>
+          <div class="bot-grid reveal" id="home-bot"></div>
         </div>
       </section>
 
@@ -208,12 +185,18 @@
                 <div class="job-body">
                   <h4>Information Technology &amp; AI Intern</h4>
                   <span class="when mono">Jul 2025 – Aug 2025 · Hong Kong</span>
-                  <p>
-                    Developed and project-managed <strong>internal RAG chatbots</strong>, engineered
-                    <strong>system prompts</strong>, built an <strong>LLM-as-Judge tool</strong> for
-                    chatbot QA, automated standardisation processes in <strong>Python</strong>, and
-                    presented demos to stakeholders.
-                  </p>
+                  <ul class="job-impact">
+                    <li>Lead end-to-end delevopment of <strong>2 RAG chatbots</strong> that reached <strong>~100 internal users</strong> and raised both enterprise AI adoption and workplace efficiency by <strong>20%+.</strong></li>
+                    <li>Built automation tool: <strong>LLM as a Judge</strong> that cut chatbot testing turnaround and errors by <strong>50%+</strong> and manual testing effort by <strong>30%+.</strong></li>
+                    <li>Presented product demos to technical and business stakeholders, including <strong>the CIO</strong>.</li>
+                  </ul>
+                  <figure class="ref-quote">
+                    <blockquote>“I am wholeheartedly recommending Valencia for any future opportunity.”</blockquote>
+                    <figcaption>
+                      Daniel Cheung, Chief Manager, AI &amp; Digital Solutions, MTR. Full reference letter available on
+                      request.
+                    </figcaption>
+                  </figure>
                   <button class="more job-more" type="button" data-job="mtr" aria-haspopup="dialog">
                     Read more →
                   </button>
@@ -227,12 +210,10 @@
                 <div class="job-body">
                   <h4>Information Engineering Intern</h4>
                   <span class="when mono">Jun 2024 – Aug 2024 · Hong Kong</span>
-                  <p>
-                    Performed <strong>big data analysis on IoT sensor datasets</strong> using
-                    <strong>Python, SQL and Excel</strong>, delivering
-                    <strong>data-driven insights</strong>, software optimisation, embedded C
-                    microcontroller programming, and cross-functional quality assurance.
-                  </p>
+                  <ul class="job-impact">
+                    <li>Identified sensor calibration issues and <strong>~5 helmets</strong> with faulty temperature sensors in active use, by analysing large-scale temperature data in <strong>Python, SQL and Excel</strong>.</li>
+                    <li>Improved temperature reading accuracy by <strong>5%+</strong> by refining sensor software and embedded C firmware.</li>
+                  </ul>
                   <button class="more job-more" type="button" data-job="bee" aria-haspopup="dialog">
                     Read more →
                   </button>
@@ -246,13 +227,10 @@
                 <div class="job-body">
                   <h4>Part-time Research Student Assistant</h4>
                   <span class="when mono">Sep 2023 – Present · Hong Kong</span>
-                  <p>
-                    Support academic research through
-                    <strong>data collection, dataset creation and management</strong>,
-                    <strong>Python data processing</strong>, and
-                    <strong>data insights reporting</strong>, alongside exploratory AI research and
-                    administrative operations.
-                  </p>
+                  <ul class="job-impact">
+                    <li>Support Dr. Jeffry Oktavianus (Assistant Professor) across <strong>5+ research projects</strong> in data collection, dataset management and exploratory AI research.</li>
+                    <li>Delivered <strong>3+ structured, analysis-ready datasets</strong> with summaries of key insights and trends, cleaned in Excel and Python.</li>
+                  </ul>
                   <button
                     class="more job-more"
                     type="button"
@@ -405,54 +383,90 @@
       <section id="projects">
         <div class="wrap">
           <span class="mono eyebrow reveal">03 · Projects</span>
-          <h2 class="sec-title reveal">Things I've built</h2>
-          <div class="proj-grid" id="proj-grid"></div>
+          <h2 class="sec-title reveal">One role, one project</h2>
+          <div class="track-grid" id="track-grid"></div>
+          <a class="more all-projects reveal" href="#projects-all">See all 6 projects →</a>
         </div>
       </section>
 
-      <section id="extracurriculars">
+      <section id="about">
         <div class="wrap">
-          <span class="mono eyebrow reveal">04 · Extracurriculars</span>
-          <h2 class="sec-title reveal">Beyond the classroom</h2>
-          <div class="act-carousel reveal" role="group" aria-label="Activities">
-            <div class="act-grid" id="act-grid"></div>
-            <div class="act-navs">
-              <button
-                class="nav-arrow prev"
-                id="act-prev"
-                type="button"
-                aria-label="Previous activity"
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
+          <span class="mono eyebrow reveal">04 · More</span>
+          <h2 class="sec-title reveal">More about me</h2>
+          <p class="sec-lead">
+            I'm a final-year engineering student at The Hong Kong Polytechnic University who ended up
+            falling for AI and data. I do my best work combining the two to identify and solve real
+            business needs. Outside of work and school, I like volunteering, building cool projects and
+            playing Sudoku!
+          </p>
+          <div class="more-grid reveal">
+            <div class="act-carousel" role="group" aria-label="Activities">
+              <div class="act-grid" id="act-grid"></div>
+              <div class="act-navs">
+                <button
+                  class="nav-arrow prev"
+                  id="act-prev"
+                  type="button"
+                  aria-label="Previous activity"
                 >
-                  <path d="M15 5l-7 7 7 7" />
-                </svg>
-              </button>
-              <button class="nav-arrow next" id="act-next" type="button" aria-label="Next activity">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2.4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M15 5l-7 7 7 7" />
+                  </svg>
+                </button>
+                <button class="nav-arrow next" id="act-next" type="button" aria-label="Next activity">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
             </div>
+            <dl class="facts">
+              <div>
+                <dt class="mono">Currently</dt>
+                <dd>
+                  Final-year BEng Electronic Systems &amp; IoT student at PolyU, expected to graduate with
+                  <strong>First-class Honours</strong>.
+                </dd>
+                <dd>
+                  My final-year project explores the application of
+                  <strong>LLMs as a scam detection method</strong>.
+                </dd>
+              </div>
+              <div>
+                <dt class="mono">Recognition</dt>
+                <dd><strong>Dean's List</strong> and <strong>scholarship recipient</strong>.</dd>
+              </div>
+              <div>
+                <dt class="mono">Languages</dt>
+                <dd>English, Indonesian, Chinese</dd>
+              </div>
+              <div>
+                <dt class="mono">Looking for</dt>
+                <dd>
+                  Internship &amp; Graduate roles in <strong>AI, data and technical consulting</strong>
+                </dd>
+              </div>
+            </dl>
           </div>
         </div>
       </section>

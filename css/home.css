@@ -48,14 +48,14 @@
   letter-spacing: -0.02em;
 }
 .hero h2 {
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-size: clamp(2rem, 4vw, 2.8rem);
   margin-top: 10px;
 }
 .hero p.lead {
   color: var(--muted);
   font-size: 1.1rem;
   max-width: 52ch;
-  margin: 22px 0 0;
+  margin: 5px 0 0;
 }
 .hero p.lead + p.lead {
   margin-top: 10px;
@@ -352,38 +352,6 @@
 .more {
   color: var(--accent);
   font-weight: 600;
-}
-/* "More" section: no box of its own. Title starts level with the neighbouring card's top edge; the squares span the card width and end at its bottom edge */
-.more-sec {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  text-decoration: none;
-  color: inherit;
-}
-.more-sec h3 {
-  font-size: 1.15rem;
-  transition: color 0.2s;
-}
-.more-sec:hover h3 {
-  color: var(--accent);
-}
-.more-boxes {
-  flex: 1;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
-.more-boxes .ico {
-  width: auto;
-  height: auto;
-  aspect-ratio: 1;
-  border-radius: 22%;
-  font-size: clamp(1.1rem, 2.4vw, 1.8rem);
-  transition: transform 0.25s;
-}
-.more-sec:hover .ico {
-  transform: translateY(-4px);
 }
 /* page opened from "More": same two-column width as the main page */
 #detail.wide .wrap {
@@ -693,4 +661,410 @@ footer a {
 }
 footer a:hover {
   color: var(--accent);
+}
+
+/* hero headline */
+.hero p.headline {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: clamp(1.1rem, 2.4vw, 1.3rem);
+  line-height: 1.3;
+  max-width: 60ch;
+  margin: 6.5px 0 0;
+}
+
+/* recruiter paths */
+.sec-lead {
+  color: var(--muted);
+  margin: -16px 0 28px;
+}
+.track-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+.track {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  transition:
+    transform 0.25s,
+    border-color 0.25s,
+    box-shadow 0.25s;
+}
+.track:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: 0 14px 40px -18px var(--glow);
+}
+.track-for {
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.track-main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 14px;
+  text-decoration: none;
+  color: inherit;
+}
+.track-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 56px;
+}
+.track-head h3 {
+  font-size: 1.1rem;
+}
+.track-stat b {
+  display: block;
+  font-family: var(--f-display);
+  font-size: 2rem;
+  line-height: 1.15;
+}
+.track-stat span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
+.track-why {
+  flex: 1;
+  color: var(--muted);
+}
+.track-also {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+}
+.track-also ul {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+}
+.track-also a {
+  color: var(--fg);
+  font-size: 0.92rem;
+  text-underline-offset: 3px;
+}
+.track-also a:hover {
+  color: var(--accent);
+}
+.all-projects {
+  display: inline-block;
+  margin-top: 24px;
+  text-decoration: none;
+}
+@media (max-width: 900px) {
+  .track-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* experience: outcome bullets and reference quote */
+.job-impact {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  max-width: 60ch;
+}
+.job-impact li + li {
+  margin-top: 8px;
+}
+.ref-quote {
+  margin: 16px 0 0;
+  padding: 2px 0 2px 16px;
+  border-left: 3px solid var(--accent);
+  max-width: 60ch;
+}
+.ref-quote blockquote {
+  margin: 0;
+  font-weight: 600;
+}
+.ref-quote figcaption {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+/* extracurricular impact line */
+.act .impact {
+  margin: 0 6px 8px;
+  display: block;
+  color: var(--fg);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+/* executive summary link on project pages */
+.summary-link {
+  margin: 18px 0 0;
+}
+
+/* ===== v2 layout changes ===== */
+/* one background grid square; sizes below are counted in squares */
+:root {
+  --sq: 22px;
+}
+
+/* hero photo: centred vertically between the middle of "Hello!" and the end of "Looking for",
+   centred one square left of its column. Its size never lets it spill past the page edge. */
+@media (min-width: 821px) {
+  .photo {
+    margin-top: calc(clamp(2.8rem, 7vw, 5.2rem) * 0.55); /* half of the "Hello!" line */
+  }
+  .photo img {
+    height: auto;
+    width: min(var(--photo), calc(100% + 2 * var(--sq)));
+    max-width: none;
+    transform: translate(calc(-50% - var(--sq)), -50%);
+  }
+}
+.photo {
+  --photo: 350px;
+}
+@media (max-width: 820px) {
+  .photo img {
+    transform: none;
+    width: calc(274px + 2 * var(--sq));
+    height: auto;
+    max-width: 100%;
+  }
+}
+
+/* hero: "Looking for" sits right under the lead, in the lead's font and size; both are 2pt
+   smaller than the site's original lead size */
+.hero p.lead {
+  font-size: calc(1rem);
+}
+.hero-grid {
+  grid-template-areas: 'eyebrow .' 'hi photo' 'intro photo' 'looking photo' 'btns .';
+}
+.intro {
+  padding-bottom: 0;
+}
+.hero-looking {
+  grid-area: looking;
+  margin: 2.5px;
+  font-size: calc(1rem);
+}
+.hero-looking dt {
+  font-family: var(--f-body);
+  font-size: inherit;
+  letter-spacing: normal;
+  color: var(--accent);
+}
+.hero-looking dd {
+  margin: 0;
+}
+.hero-looking strong {
+  font-weight: 700;
+}
+.hero-grid > .btns {
+  margin-top: 13px;
+}
+@media (max-width: 820px) {
+  .hero-grid {
+    grid-template-areas: 'eyebrow' 'hi' 'intro' 'looking' 'btns' 'photo';
+  }
+}
+
+/* mascot + chat (home "01 Chatbot" and the chatbot's project page): mascot left, chat right,
+   the robot's shoes on the chat window's bottom edge */
+.bot-grid {
+  --bot: calc(15 * var(--sq)); /* the mascot drawing is 15 squares tall */
+  display: grid;
+  /* 300px + 20px gap leaves the chat window about 70% of the width */
+  grid-template-columns: 300px minmax(0, 1fr);
+  grid-template-areas: 'mascot chat' 'mlink clink';
+  column-gap: 20px;
+  row-gap: 24px;
+  align-items: end;
+}
+.mascot-wrap {
+  grid-area: mascot;
+  position: relative;
+  /* the robot's shoes end 41/48 of the way down its drawing; that point sits on the chat's bottom edge */
+  height: calc(var(--bot) * 41 / 48);
+}
+.mascot {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--bot) * -7 / 48);
+  width: var(--bot);
+  height: var(--bot);
+  transform: translateX(-50%);
+  image-rendering: pixelated;
+  cursor: pointer; /* click it to make it laugh or get scared */
+  -webkit-tap-highlight-color: transparent;
+}
+.mascot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+.bot-chat {
+  grid-area: chat;
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+.bot-link {
+  position: relative;
+  z-index: 2; /* above the robot's canvas, which hangs below its box and now takes clicks */
+  justify-self: end;
+  align-self: start;
+  text-align: right;
+  text-decoration: none;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+.bot-link.mlink {
+  grid-area: mlink;
+}
+.bot-link.clink {
+  grid-area: clink;
+}
+/* the conversation area starts small and grows with the chat, up to a scrolling maximum;
+   3 squares of space separate it from the sample questions */
+.chat-compact .chat-log {
+  height: auto;
+  min-height: 0;
+  margin-bottom: calc(3 * var(--sq));
+}
+.chat-compact h2 {
+  font-size: 1.3rem;
+}
+.chat-compact .chat-intro {
+  color: var(--muted);
+  margin: 6px 0 0;
+}
+.chat-left {
+  color: var(--accent);
+}
+.chat-off {
+  color: var(--muted);
+}
+/* project page: same layout, scaled to its narrower column */
+.page-bot {
+  --bot: calc(12 * var(--sq));
+  grid-template-columns: 240px minmax(0, 1fr);
+  grid-template-areas: 'mascot chat' 'mlink .';
+  margin: 8px 0 0;
+}
+/* the link is wider than this narrower mascot column, so it starts at the page margin instead */
+.page-bot .bot-link.mlink {
+  grid-column: 1 / -1;
+  justify-self: start;
+  text-align: left;
+}
+@media (max-width: 820px) {
+  .bot-grid,
+  .page-bot {
+    --bot: calc(10 * var(--sq));
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'mascot' 'chat' 'clink' 'mlink';
+    row-gap: 14px;
+  }
+  /* on narrow screens the robot stands on top of the chat window */
+  .mascot-wrap {
+    margin-bottom: -14px;
+  }
+}
+
+/* 02 projects: each card is a subgrid so every row lines up across the three */
+.track-grid {
+  grid-auto-rows: auto;
+  row-gap: 22px;
+}
+.track {
+  display: grid;
+  grid-row: span 5;
+  grid-template-rows: subgrid;
+  row-gap: 14px;
+  text-decoration: none;
+  color: inherit;
+}
+.track-for {
+  margin-bottom: 0;
+  align-self: start;
+}
+.track-head {
+  align-self: start;
+}
+.track-stat {
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+.track-stat b {
+  display: inline;
+  margin-right: 4px;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--fg);
+}
+.track-why {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+.track .more {
+  align-self: end;
+}
+
+/* 04 more about me: two activity cards, then the facts in the third column, unboxed as before */
+.more-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 40px;
+}
+.more-grid .act-carousel {
+  grid-row: span 2;
+  display: grid;
+  grid-template-rows: subgrid;
+  min-width: 0;
+}
+.more-grid .act-grid {
+  --act-show: 2;
+}
+.more-grid .facts {
+  grid-column: 2;
+  grid-row: 1;
+  margin: 0;
+  gap: 18px;
+  align-content: start;
+  align-self: center; /* vertically centred on the activity cards */
+}
+/* wide screens: arrows on the sides like the original; the right one sits in the gap before the facts */
+@media (min-width: 1220px) {
+  .more-grid {
+    column-gap: 80px;
+  }
+  .more-grid .act-navs .next {
+    right: -60px;
+  }
+}
+@media (max-width: 900px) {
+  .more-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto;
+  }
+  .more-grid .facts {
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: 28px;
+  }
+}
+@media (max-width: 560px) {
+  .more-grid .act-grid {
+    --act-show: 1;
+  }
 }

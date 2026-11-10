@@ -2,7 +2,7 @@
 
 import { amzDashHTML, mountAmzDash } from './dashboard-amazon.js';
 import { dashHTML, mountDash } from './dashboard-netflix.js';
-import { chatAvailable, chatHTML, mountChat } from './chat.js';
+import { botGridHTML, mountBotChat } from './home-chat.js';
 import { projects } from './data/projects.js';
 import { setActive } from './nav.js';
 import { card } from './project-cards.js';
@@ -49,28 +49,58 @@ function partsHTML(p) {
       .join('')
   );
 }
-let backHref = '#projects';
+/* the back link returns visitors to where they opened each project from. Opened from the
+   chatbot section or the chatbot's project page, it reads "Back to chatbot" */
+const BACK_LABELS = {
+  chatbot: 'Back to chatbot',
+  'project-ask-valencia': 'Back to chatbot',
+};
+const DEFAULT_BACK = { href: '#projects', label: 'Back to projects' };
+let origins = {};
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('a[href^="#project-"]');
+  if (!a || a.classList.contains('back')) return; /* going back keeps that page's own origin */
+  const from = main.hidden ? location.hash.slice(1) : a.closest('main section')?.id;
+  const to = a.getAttribute('href').slice(1);
+  if (!from || from === to) return;
+  origins[to] = { href: '#' + from, label: BACK_LABELS[from] || 'Back to projects' };
+});
+/* under the pills: "Personal project" and its data source on two lines on the left, the
+   summary download on the right */
+function metaRowHTML(p) {
+  const lines = [p.role, p.when].filter(Boolean).join(' · ').split(' · ');
+  const dl = p.summaryPdf
+    ? `<a class="more dl-link" href="${p.summaryPdf}" download>Download Executive Summary</a>`
+    : '';
+  const meta = lines[0] ? `<p class="mono meta-lines">${lines.join('<br>')}</p>` : '';
+  return dl || meta ? `<div class="meta-row">${meta}${dl}</div>` : '';
+}
+let pageBot = null; /* the mascot on the chatbot's project page */
 function route() {
   const h = location.hash.slice(1);
   detail.classList.toggle('wide', h === 'projects-all');
   const p = projects.find((x) => 'project-' + x.slug === h);
+  if (pageBot) {
+    pageBot.dispose();
+    pageBot = null;
+  }
   if (h === 'projects-all') {
-    backHref = '#projects-all';
     db.innerHTML = `<a class="back mono" href="#projects">← Back to projects</a>
-        <h1 class="sec-title">Things I've built - more</h1>
+        <h1 class="sec-title">Things I've built</h1>
         <div class="proj-grid">${projects.map((x) => card(x)).join('')}</div>`;
     main.hidden = true;
     detail.hidden = false;
     scrollTo(0, 0);
     setActive('#projects');
   } else if (p) {
-    db.innerHTML = `<a class="back mono" href="${backHref}">← Back to projects</a>
+    const back = origins[h] || DEFAULT_BACK;
+    db.innerHTML = `<a class="back mono" href="${back.href}">← ${back.label}</a>
         <h1>${p.title}</h1><p class="sum">${p.sum}</p>
-        <div class="tags">${p.tools.map((t) => `<span class="pill">${t}</span>`).join('')}</div>
-        ${p.role || p.when ? `<p class="mono" style="margin-top:14px">${[p.role, p.when].filter(Boolean).join(' · ')}</p>` : ''}
+        <div class="tags">${p.fit ? `<span class="pill fit">${p.fit}</span>` : ''}${p.tools.map((t) => `<span class="pill">${t}</span>`).join('')}</div>
+        ${metaRowHTML(p)}
         ${p.stats ? `<div class="stats">${p.stats.map((s) => `<div class="stat"><b>${s.n}</b><span>${s.l}</span></div>`).join('')}</div>` : ''}
         ${p.parts ? partsHTML(p) : p.dash === 'amazon' ? amzDashHTML : p.dash ? dashHTML : p.image ? `<img src="${p.image}" alt="${p.imageAlt || p.title}" style="width:100%;border-radius:16px;margin:32px 0;border:1px solid var(--line)">` : '<div class="hero-img">screenshot or diagram</div>'}
-        ${p.chat && chatAvailable ? chatHTML : ''}
+        ${p.chat ? `<div class="bot-grid page-bot">${botGridHTML({ id: 'page-chat', heading: 'Try it yourself' })}</div>` : ''}
         ${
           p.parts
             ? ''
@@ -83,9 +113,9 @@ function route() {
         ${p.learned ? `<h2>${p.learnedH || 'What I learned'}</h2>${Array.isArray(p.learned) ? `<ul>${p.learned.map((l) => `<li>${l}</li>`).join('')}</ul>` : `<p>${p.learned}</p>`}` : ''}
         ${p.verdict ? `<h2>Final verdict</h2><p>${p.verdict}</p>` : ''}
         ${p.links && p.links.length ? `<h2>Links</h2><p>${p.links.map((l) => `<a href="${l.url}" target="_blank" rel="noopener" style="color:var(--accent)">${l.label} ↗</a>`).join(' · ')}</p>` : ''}`;
-    if (p.chat && chatAvailable) mountChat();
     main.hidden = true;
     detail.hidden = false;
+    if (p.chat) pageBot = mountBotChat(db.querySelector('.page-bot'));
     scrollTo(0, 0);
     if (p.dash)
       (p.dash === 'amazon'
@@ -93,7 +123,7 @@ function route() {
         : mountDash)(); /* after unhiding, so the charts can measure their width */
     setActive('#projects');
   } else {
-    backHref = '#projects';
+    origins = {}; /* back home: the next project opened sets a fresh origin */
     if (!main.hidden) {
       return;
     }

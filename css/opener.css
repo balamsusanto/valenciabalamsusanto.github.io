@@ -1,0 +1,137 @@
+/* Opening screen: Hello! → Halo! → 您好！ fade in one by one, then the screen slides up to reveal
+   the home page. Shown only when <html> has .opener-on (set by the small script in index.html). */
+.opener {
+  display: none;
+}
+html.opener-on body {
+  overflow: hidden;
+}
+html.opener-on .opener {
+  position: fixed;
+  inset: 0;
+  z-index: 95; /* above the nav, below the custom cursor */
+  display: grid;
+  place-items: center;
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--dot) 1px, transparent 1.3px);
+  background-size: 22px 22px;
+  touch-action: none;
+  cursor: pointer;
+  will-change: transform;
+  transition: transform 0.35s ease; /* springs back after a short drag */
+}
+.opener::before {
+  /* soft glow behind the words */
+  content: '';
+  position: absolute;
+  width: min(70vw, 720px);
+  aspect-ratio: 1;
+  background: radial-gradient(closest-side, var(--glow), transparent);
+  filter: blur(40px);
+  opacity: 0.7;
+  pointer-events: none;
+}
+.opener-words {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.opener-word {
+  grid-area: 1 / 1;
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(3.6rem, 13vw, 9.5rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(12px) scale(0.97);
+  filter: blur(10px);
+  transition:
+    opacity 0.9s ease,
+    transform 1.1s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.9s ease;
+}
+.opener-word.show {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+.opener-word.hide {
+  opacity: 0;
+  transform: translateY(-10px) scale(1.02);
+  filter: blur(8px);
+  transition-duration: 0.7s;
+}
+.opener-skip {
+  position: absolute;
+  left: 50%;
+  bottom: max(28px, env(safe-area-inset-bottom, 0px) + 16px);
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: none;
+  color: var(--muted);
+  font-family: var(--f-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.opener-skip:hover {
+  color: var(--accent);
+}
+.opener-skip svg {
+  animation: opener-bob 1.6s ease-in-out infinite;
+}
+@keyframes opener-bob {
+  50% {
+    transform: translateY(-5px);
+  }
+}
+/* leaving: the whole screen slides up like a lifted cover (1.4s, matches LIFT_MS in opener.js) */
+html.opener-on .opener.leaving {
+  transform: translateY(-100%) !important;
+  transition: transform 1.4s cubic-bezier(0.7, 0, 0.2, 1);
+}
+.opener.dragging {
+  transition: none;
+}
+
+/* home page: "scroll up again to replay the intro" */
+.replay-prompt {
+  position: fixed;
+  top: 84px;
+  left: 50%;
+  z-index: 70;
+  transform: translate(-50%, -8px);
+  padding: 8px 16px;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--fg);
+  font-family: var(--f-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px -14px var(--glow);
+  opacity: 0;
+  transition:
+    opacity 0.25s,
+    transform 0.25s;
+  pointer-events: none;
+}
+.replay-prompt.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+/* phones: stop the browser's pull-to-refresh, so pulling down at the top can replay the intro */
+html {
+  overscroll-behavior-y: none;
+}
