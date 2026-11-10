@@ -1,6 +1,6 @@
 /* hero */
 .hero {
-  padding-block: 120px 72px;
+  padding-block: 90px 72px;
   /* fills the first screen below the sticky nav, so "01 · Chatbot" only shows after scrolling */
   min-height: calc(100svh - var(--nav-h, 70px));
   display: flex;
