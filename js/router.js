@@ -2,6 +2,7 @@
 
 import { amzDashHTML, mountAmzDash } from './dashboard-amazon.js';
 import { dashHTML, mountDash } from './dashboard-netflix.js';
+import { CartoonBot } from './cartoon-bot.js';
 import { botGridHTML, mountBotChat } from './home-chat.js';
 import { projects } from './data/projects.js';
 import { setActive } from './nav.js';
@@ -44,10 +45,26 @@ function partsHTML(p) {
     ${x.prompt ? `<div class="promptbox"><span class="box-label mono">The prompt</span><p>${x.prompt}</p></div>` : ''}
     ${x.points ? `<ul>${x.points.map((t) => `<li>${t}</li>`).join('')}</ul>` : ''}
     ${x.code ? codeHTML(x.code) : ''}${x.out ? codeHTML(x.out) : ''}
-    ${x.fig ? `<figure class="fig"><img src="${x.fig.src}" alt="${x.fig.alt}" loading="lazy"><figcaption>${x.fig.cap}</figcaption></figure>` : ''}`,
+    ${x.fig ? `<figure class="fig"><img src="${x.fig.src}" alt="${x.fig.alt}" loading="lazy"><figcaption>${x.fig.cap}</figcaption></figure>` : ''}
+    ${x.bots ? statesHTML(x.botsCap) : ''}`,
       )
       .join('')
   );
+}
+/* "Creating my chatbot mascot": one small canvas per robot state, animated by mountStates() */
+const titleCase = (s) => s[0].toUpperCase() + s.slice(1);
+function statesHTML(cap) {
+  return `<figure class="fig"><div class="bot-states">${Object.entries(CartoonBot.states)
+    .map(
+      ([name, st]) => `<div class="bot-state">
+        <canvas width="240" height="240" data-state="${name}" role="img" aria-label="Robot mascot, ${name} state: ${st.desc}"></canvas>
+        <b>${titleCase(name)}</b><span>${st.desc}</span></div>`,
+    )
+    .join('')}</div><figcaption>${cap}</figcaption></figure>`;
+}
+let stateBots = []; /* stopped when the page changes, so the animations don't run in the background */
+function mountStates() {
+  stateBots = [...db.querySelectorAll('.bot-states canvas')].map((c) => CartoonBot.mount(c, c.dataset.state));
 }
 /* the back link returns visitors to where they opened each project from. Opened from the
    chatbot section or the chatbot's project page, it reads "Back to chatbot" */
@@ -84,6 +101,8 @@ function route() {
     pageBot.dispose();
     pageBot = null;
   }
+  stateBots.forEach((b) => b.stop());
+  stateBots = [];
   if (h === 'projects-all') {
     db.innerHTML = `<a class="back mono" href="#projects">← Back to projects</a>
         <h1 class="sec-title">Things I've built</h1>
@@ -116,6 +135,7 @@ function route() {
     main.hidden = true;
     detail.hidden = false;
     if (p.chat) pageBot = mountBotChat(db.querySelector('.page-bot'));
+    if (p.parts) mountStates();
     scrollTo(0, 0);
     if (p.dash)
       (p.dash === 'amazon'

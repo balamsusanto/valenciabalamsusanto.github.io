@@ -1,6 +1,14 @@
 /* hero */
 .hero {
   padding-block: 120px 72px;
+  /* fills the first screen below the sticky nav, so "01 · Chatbot" only shows after scrolling */
+  min-height: calc(100svh - var(--nav-h, 70px));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero > .wrap {
+  width: 100%; /* a flex item with auto side margins would otherwise shrink to its content */
 }
 /* photo sits in the intro row, so its height always equals "I'm Valencia" through the last paragraph, plus the gaps above and below */
 .hero-grid {

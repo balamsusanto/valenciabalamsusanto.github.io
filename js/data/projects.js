@@ -124,6 +124,7 @@ export const projects = [
   {
     slug: 'ask-valencia',
     fit: 'AI Engineer',
+    summaryPdf: 'files/Ask_My_AI_Executive_Summary.pdf',
     ico: 'AI',
     title: 'Ask My AI: A Chatbot About Me',
     tag: 'LLMs',
@@ -136,7 +137,7 @@ export const projects = [
     chat: true,
     stats: [
       { n: '48 / 48', l: 'test questions passed, including 16 it had to refuse' },
-      { n: '175', l: 'short passages from my CV, a reference letter, this website and my project reports' },
+      { n: '176', l: 'short passages from my CV, a reference letter, this website and my project reports' },
       { n: '6–18 s', l: 'time to answer on the live site once the server is awake' },
       { n: '0', l: 'phone numbers or <br>e-mail addresses it can share: all removed before indexing' },
     ],
@@ -144,7 +145,7 @@ export const projects = [
       'Chatbots are good at sounding confident, which is a problem when the subject is a real person. A recruiter asking about me needs answers that are true, and a clear "I don\'t know" when my documents don\'t say. This project tests whether a chatbot can answer only from my own documents, and admit when they do not cover a question.',
     approach: [
       'Collected my CV, a recommendation letter from my MTR internship manager, the text of this website and the reports of my loan, gold, Amazon and Netflix projects, and removed every phone number and e-mail address before indexing.',
-      'Split them into 175 short passages and built a RAG chatbot (it looks up my documents before answering, instead of relying on memory).',
+      'Split them into 176 short passages and built a RAG chatbot (it looks up my documents before answering, instead of relying on memory).',
       'Searched the passages both by meaning and by keyword, re-ranked the best matches with a second model, and let the LLM (DeepSeek) answer only from the top five.',
       'Told it to say it is unsure when even the best match is a poor fit, and to list the documents each answer came from.',
       'Limited each visitor to 15 questions every 10 minutes. Questions and answers were logged during testing, but the live version does not store them.',
@@ -171,6 +172,7 @@ export const projects = [
   {
     slug: 'netflix-catalogue',
     fit: 'Data Analyst',
+    summaryPdf: 'files/Netflix_Subscription_Executive_Summary.pdf',
     ico: 'NF',
     title: 'Should I Keep Paying for Netflix?',
     tag: 'Data analysis',
@@ -216,14 +218,25 @@ export const projects = [
     title: 'Automation &amp; others',
     tag: 'Automation',
     blurb:
-      'Python scripts that download audio, transcribe it and rename files in bulk, plus a prompt that gets an LLM to build short title videos.',
+      'Python scripts that download audio, transcribe it and rename files in bulk, plus prompts that get an LLM to build my chatbot\'s mascot and short title videos.',
     sum: 'Handing repetitive work, from collecting audio to making title videos, over to code and LLMs.',
-    tools: ['Python', 'yt-dlp', 'ElevenLabs API', 'openpyxl', 'Playwright', 'FFmpeg'],
+    tools: ['Python', 'JavaScript', 'yt-dlp', 'ElevenLabs API', 'openpyxl', 'Playwright', 'FFmpeg'],
     intro:
       'These are small tools I built to avoid repetitive work. The YouTube, transcript and rename scripts prepared the Indonesian scam audio data for my final-year project.',
     parts: [
       {
-        h: '1. Using LLM for video generation',
+        h: '1. Creating my chatbot mascot',
+        p: [
+          'Used an LLM to design the robot mascot that sits next to my chatbot. The prompt below asks for a 2D robot drawn by JavaScript code, so it runs on the website without any image files.',
+          'The code draws the robot on a 48 × 48 pixel grid and gives it 11 states. The chatbot switches between them as it works: thinking while it looks up an answer, talking while it replies, and broken if the server fails. Clicking the robot makes it laugh or get scared, picked at random.',
+        ],
+        prompt:
+          "Generate different states of the 2D robot, taking inspiration from the attached image. The cartoon should be generated via JavaScript code and should be deployable to a web, e.g. robot shown thinking, error, etc. Ask if anything's unclear.",
+        bots: true,
+        botsCap: "Result: every state of the robot, drawn live by the code on this page.",
+      },
+      {
+        h: '2. Using LLM for video generation',
         p: [
           'Used an LLM to create a title scene of up to 5 seconds for a direction video, which shows people the way to a location. The prompt below has the LLM build the animation in JavaScript on a canvas, then render it to MP4 with Playwright (a browser automation tool) and FFmpeg.',
           'I ask for a few example styles and a storyboard before the full render, so I can choose a look and check the plan first.',
@@ -237,7 +250,7 @@ export const projects = [
         },
       },
       {
-        h: '2. Automating YouTube downloads',
+        h: '3. Automating YouTube downloads',
         p: [
           'Turned a spreadsheet of YouTube links into a numbered folder of MP3 files, with no manual downloading.',
         ],
@@ -281,7 +294,7 @@ while ws.cell(row=r, column=4).value is not None:
         },
       },
       {
-        h: '3. Automating audio transcripts',
+        h: '4. Automating audio transcripts',
         p: [
           'Turned audio files into text files that show who spoke and when.',
           'ElevenLabs is very good for transcription but is often costly, so I call its API (a way for code to use the service directly), which is more cost-effective. The code can also be modified for live transcription.',
@@ -318,7 +331,7 @@ while ws.cell(row=r, column=4).value is not None:
         },
       },
       {
-        h: '4. Automating file renames',
+        h: '5. Automating file renames',
         p: [
           'Renamed transcript files in bulk to match the numbering in the dataset spreadsheet, with a safe way to undo it.',
         ],
@@ -343,7 +356,7 @@ while ws.cell(row=r, column=4).value is not None:
         fig: {
           src: 'images/automation/transcripts.jpg',
           alt: 'Finder window of a folder named text clean holding numbered transcript files, from audioTranscript_1.txt to audioTranscript_72.txt',
-          cap: 'Result: renamed transcripts, numbered without gaps. The audio folder in section 2 skips 8, 34 and 66.',
+          cap: 'Result: renamed transcripts, numbered without gaps. The audio folder in section 3 skips 8, 34 and 66.',
         },
       },
     ],
@@ -351,6 +364,7 @@ while ws.cell(row=r, column=4).value is not None:
   {
     slug: 'gold-risk-ranges',
     fit: 'Financial Analyst',
+    summaryPdf: 'files/Gold_Risk_Ranges_Executive_Summary.pdf',
     ico: 'Au',
     title: 'Forecasting Gold Volatility and Risk Ranges',
     tag: 'Market risk',
