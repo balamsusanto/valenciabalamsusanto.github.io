@@ -54,7 +54,7 @@ const CHIPS = [
 export function chatHTML({ id = 'chat', heading = 'Try it yourself', compact = false } = {}) {
   return `<section class="chat${compact ? ' chat-compact' : ''}" aria-labelledby="${id}-h">
       <h2 id="${id}-h">${heading}</h2>
-      <p class="chat-intro">Ask anything about my education, work experience, skills or projects. It only knows what is in my documents, so it will tell you when it is not sure.</p>
+      <p class="chat-intro">Ask anything about my education, work experience, skills or projects. It only knows what is in my documents, so it will tell you when it is not sure. P.s. Please allow 5-10 seconds for my chatbot to answer you.</p>
       <div class="chat-log" aria-live="polite"></div>
       <div class="chat-chips">${CHIPS.map((q) => `<button type="button" class="pill chip">${q}</button>`).join('')}</div>
       <form class="chat-form">
